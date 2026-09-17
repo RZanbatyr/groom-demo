@@ -3,6 +3,7 @@ import type { CSSProperties, ReactNode, RefObject } from "react";
 import { CONTENT, type Content, type Lang, type ServicePage } from "./content";
 import ScrollWorldHero from "./components/ScrollWorldHero";
 import HeroLoader from "./components/HeroLoader";
+import { applyJsonLd } from "./seo";
 
 const BASE = import.meta.env.BASE_URL;
 const HERO_IMAGE = `${BASE}img/hero.webp`;
@@ -1075,6 +1076,8 @@ export default function App() {
     if (m) m.setAttribute("content", c.meta.description);
   }, [lang, c]);
 
+
+
   useEffect(() => {
     const onHash = () => {
       const r = parseRoute();
@@ -1097,6 +1100,11 @@ export default function App() {
   const toggleLang = () => setLang((l) => (l === "ru" ? "kz" : "ru"));
 
   const page = useMemo(() => (route.kind === "page" ? c.pages.find((p) => p.slug === route.slug) : undefined), [route, c]);
+
+  // JSON-LD для Google и ИИ-ассистентов: бизнес + услуги, на странице услуги ещё FAQ
+  useEffect(() => {
+    applyJsonLd(c, page);
+  }, [c, page]);
 
   return (
     <div className="bg-white">

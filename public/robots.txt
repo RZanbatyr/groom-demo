@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://rzanbatyr.github.io/groom-demo/sitemap.xml
